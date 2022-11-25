@@ -15,15 +15,13 @@ public class UserController {
     private List<Map<String, String>> users = new ArrayList<Map<String, String>>() {{
         add(new HashMap<String, String>() {{
             put("id", "1");
-            put("text", "aaa");
-        }});
-        add(new HashMap<String, String>() {{
-            put("id", "2");
-            put("text", "aa");
-        }});
-        add(new HashMap<String, String>() {{
+            put("name", "Anya");
+        }});add(new HashMap<String, String>() {{
             put("id", "3");
-            put("text", "a");
+            put("name", "Yana");
+        }});add(new HashMap<String, String>() {{
+            put("id", "4");
+            put("name", "Sanya");
         }});
     }};
 
