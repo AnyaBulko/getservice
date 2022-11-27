@@ -1,65 +1,54 @@
 package anbulko.getservice.controller;
 
-import anbulko.getservice.exceptions.NotFoundException;
+import anbulko.getservice.domain.User;
+import anbulko.getservice.domain.Views;
+import anbulko.getservice.repo.UserRepo;
+import com.fasterxml.jackson.annotation.JsonView;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private int counter = 4;
-    private List<Map<String, String>> users = new ArrayList<Map<String, String>>() {{
-        add(new HashMap<String, String>() {{
-            put("id", "1");
-            put("name", "Anya");
-        }});add(new HashMap<String, String>() {{
-            put("id", "3");
-            put("name", "Yana");
-        }});add(new HashMap<String, String>() {{
-            put("id", "4");
-            put("name", "Sanya");
-        }});
-    }};
+
+    private final UserRepo userRepo;
+
+    @Autowired
+    public UserController(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
 
     @GetMapping
-    public List<Map<String, String>> list() {
-        return users;
+    @JsonView(Views.Normal.class)
+    public List<User> list() {
+        return userRepo.findAll();
     }
 
     @GetMapping("{id}")
-    public Map<String, String> getUser(@PathVariable String id) {
-        return geUser(id);
-    }
-
-    private Map<String, String> geUser(String id) {
-        return users.stream()
-                .filter(user -> user.get("id").equals(id))
-                .findFirst()
-                .orElseThrow(NotFoundException::new);
-    }
-
-    @PostMapping
-    public Map<String, String> create(@RequestBody Map<String, String> user) {
-        user.put("id", String.valueOf(counter++));
-        users.add(user);
+    public User get(@PathVariable("id") User user) {
         return user;
     }
 
+    @PostMapping
+    public User create(@RequestBody User user) {
+        user.setRegistrationDate(LocalDateTime.now());
+        return userRepo.save(user);
+    }
+
     @PutMapping("{id}")
-    public Map<String, String> update(@PathVariable String id, @RequestBody Map<String, String> user) {
-        Map<String, String> userFromDB = getUser(id);
-        userFromDB.putAll(user);
-        userFromDB.put("id", id);
-        return userFromDB;
+    public User update(
+            @PathVariable("id") User userFromDB,
+            @RequestBody User user) {
+        BeanUtils.copyProperties(user,userFromDB,"id");
+        return userRepo.save(userFromDB);
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable String id) {
-        Map<String, String> user = getUser(id);
-        users.remove(user);
+    public void delete(@PathVariable("id") User user) {
+        userRepo.delete(user);
     }
 }
