@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "usr")
@@ -29,6 +30,14 @@ public class User {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     @JsonView(Views.fullUser.class)
     private LocalDateTime registrationDate;
+
+    private String password;
+
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
+
+    @Enumerated(value = EnumType.STRING)
+    private Status status;
 
     public LocalDateTime getRegistrationDate() {
         return registrationDate;
@@ -68,5 +77,29 @@ public class User {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

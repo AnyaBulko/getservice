@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: 'jdbc:postgresql://localhost/getservice'
+    username: 'postgres'
+    password: 'root'
+  jpa:
+    generate-ddl: true
+jwt:
+  header: Authorization
+  secret: 'anbulkoanbulkoanbulkoanbulkoanbulkoanbulko'
+  expiration: 604800
