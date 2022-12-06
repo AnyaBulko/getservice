@@ -1,6 +1,6 @@
 // const {createApp} = Vue
 const instance = axios.create({
-    baseURL: 'http://localhost:8080/api/'
+    baseURL: 'http://localhost:8080/api'
 });
 
 // const UsersList = {
@@ -9,11 +9,16 @@ const instance = axios.create({
 
 // Создаём Vue-приложение
 const app = Vue.createApp({
-    template: '<users-list :users="users" />',
+    template: '<div><users-list :users="users" />' +
+        '<div v-if="!profile">Необходимо авторизоваться <a  href="/login">здесь</a></div></div>',
     data() {
         return {
-            users: []
+            users: [],
+            profile: frontendData.profile
         }
+    },
+    created: function () {
+        // instance.get('api/users').then(response => response.data.forEach(user => this.users.push(user)))
     }
 
     // Остальные свойства для компонента
@@ -24,15 +29,13 @@ app.component('users-list', {
     template: '<div>' +
         '<user-item v-for="user in users" :user="user"></user-item>' +
         '</div>',
-    created: function () {
-        instance.get('/users').then(response => response.data.forEach(user => this.users.push(user))
-        )
-    }
+
 })
 
 app.component('user-item', {
     props: ['user'],
-    template: '<div><i>{{ user.id }}</i> {{user.name}}</div>'
+    template: '<div><i>{{ user.id }}</i> {{user.name}}</div>',
+
 })
 
 // Монтируем приложение Vue
