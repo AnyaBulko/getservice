@@ -3,22 +3,26 @@ const instance = axios.create({
     baseURL: 'http://localhost:8080/api'
 });
 
-// const UsersList = {
-//     template: '<div>List11</div>'
-// }
-
 // Создаём Vue-приложение
 const app = Vue.createApp({
-    template: '<div><users-list :users="users" />' +
-        '<div v-if="!profile">Необходимо авторизоваться <a  href="/login">здесь</a></div></div>',
+    template: '<div><div v-if="!profile"> Необходимо авторизоваться <a href="/auth/login"> здесь</a></div>' +
+        '<users-list v-else :users="users" />' +
+        '</div>' +
+        '<div v-if="profile">' +
+        '<div>{{profile.username}}</div>' +
+        '    <form action="/auth/logout" method="POST">\n' +
+        '        <button type="submit">Выйти</button>\n' +
+        '    </form>' +
+        '</div>',
     data() {
         return {
-            users: [],
-            profile: frontendData.profile
+            users: frontendData.users,
+            profile: frontendData.profile,
+            test: null
         }
     },
     created: function () {
-        // instance.get('api/users').then(response => response.data.forEach(user => this.users.push(user)))
+        //instance.get('api/users').then(response => response.data.forEach(user => this.users.push(user)))
     }
 
     // Остальные свойства для компонента

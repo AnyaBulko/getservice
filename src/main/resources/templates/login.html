@@ -8,22 +8,8 @@
 <div>
     <h2>Авторизация</h2>
     <form method="post"
-    onsubmit="
-        let test = {
-            email: this.email.value,
-            password: this.password.value
-        }
-
-        var payload = {
-            method: 'post',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify(test)
-        };
-        fetch('http://localhost:8080/api/auth/login',payload).then(resp => resp.text()).then(text => console.log(text))
-        return false;
-"
     >
-        <input type="text" id="email" name="email" placeholder="email">
+        <input type="text" id="username" name="username" placeholder="email">
         <input type="password" id="password" name="password" placeholder="Password">
         <button type="submit" >Войти</button>
     </form>

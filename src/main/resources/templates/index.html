@@ -6,15 +6,12 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <script th:inline="javascript">
-        const frontendData = [[${frontendData}]]
+        var frontendData = [[${frontendData}]];
     </script>
 </head>
 <body>
     <h3>Test</h3>
     <div id="app"></div>
     <script src="/js/main.js"></script>
-    <form action="/auth/logout" method="POST">
-        <button type="submit">Выйти</button>
-    </form>
 </body>
 </html>
