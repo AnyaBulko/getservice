@@ -1,29 +1,44 @@
 <template>
-  <div>11</div>
-  <div>
-    <div v-if="!profile"> Необходимо авторизоваться <a href="/auth/login"> здесь</a></div>
-    <div v-else>
-      <div>{{ profile.username }}</div>
-      <user-list :users="users"/>
-      <form action="/auth/logout" method="POST">
-        <button type="submit">Выйти</button>
+  <v-app>
+
+    <v-app-bar title="GetService">
+      <v-spacer></v-spacer>
+      <v-btn v-if="!profile" href="/auth/login">Войти</v-btn>
+
+      <form v-else class="px-4" action="/auth/logout" method="POST">
+        {{ profile.username }}
+        <v-btn type="submit" color="primary" append-icon="logout" class="ml-6">Выйти</v-btn>
       </form>
-    </div>
-  </div>
+    </v-app-bar>
+
+    <v-navigation-drawer v-if="profile">
+      <v-card>
+        <side-panel ></side-panel>
+      </v-card>
+    </v-navigation-drawer>
+
+    <v-main>
+      <v-container>
+          <router-view></router-view>
+      </v-container>
+
+    </v-main>
+  </v-app>
+
 
 </template>
 
 <script>
-import UserList from "../components/UserList.vue";
+import SidePanel from "../components/SidePanel.vue";
 
 export default {
   components: {
-    UserList
+
+    SidePanel
   },
-  data() {
-    return {
-      users: frontendData.users,
-      profile: frontendData.profile
+  computed: {
+    profile() {
+      return this.$store.state.profile
     }
   }
 }
