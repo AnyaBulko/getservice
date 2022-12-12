@@ -1,27 +1,27 @@
 <template>
   <v-list>
     <v-list-item
-        active-color="primary"
         variant="plain"
     >
-      <v-list-item-title>
-        <v-btn variant="text"><span class="material-icons-round">people_alt</span></v-btn>
+      <v-list-item-title append-icon="people_alt">
+        <v-icon icon="people_alt" class="mr-3"/>
         Клиенты
       </v-list-item-title>
     </v-list-item>
 
     <v-list-item
-        active-color="primary"
+
         variant="plain"
+        active-color="primary"
     >
       <v-list-item-title>
-        <v-btn variant="text"><span class="material-icons-round">calendar_month</span></v-btn>
+        <v-icon icon="calendar_month" class="mr-3"/>
         Раписание
       </v-list-item-title>
     </v-list-item>
 
 
-    <div v-if="profile.authorities.find((i) => i.authority === 'user:write')">
+    <div v-if="profile.role === 'ADMIN'">
       <v-divider></v-divider>
       <v-list-subheader>Панель администратора</v-list-subheader>
 
@@ -29,9 +29,10 @@
           active-color="primary"
           variant="plain"
       >
+
         <v-list-item-title>
-          <v-btn variant="text"><span class="material-icons-round">manage_accounts</span></v-btn>
-          <router-link to="/users">Пользователи</router-link>
+          <v-icon icon="manage_accounts" class="mr-3"/>
+          <router-link to="/users" class="title">Пользователи</router-link>
         </v-list-item-title>
       </v-list-item>
     </div>

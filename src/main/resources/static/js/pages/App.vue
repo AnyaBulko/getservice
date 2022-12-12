@@ -1,13 +1,13 @@
 <template>
   <v-app>
 
-    <v-app-bar title="GetService">
+    <v-app-bar>
+      <v-app-bar-title @click="this.$router.push('/')">GetService</v-app-bar-title>
       <v-spacer></v-spacer>
+      <v-btn v-if="profile" variant="plain" :disabled="$route.path === '/profile'" @click="showProfile">{{ profile.name }}</v-btn>
       <v-btn v-if="!profile" href="/auth/login">Войти</v-btn>
-
       <form v-else class="px-4" action="/auth/logout" method="POST">
-        {{ profile.username }}
-        <v-btn type="submit" color="primary" append-icon="logout" class="ml-6">Выйти</v-btn>
+        <v-btn type="submit" color="primary" append-icon="logout" >Выйти</v-btn>
       </form>
     </v-app-bar>
 
@@ -39,6 +39,11 @@ export default {
   computed: {
     profile() {
       return this.$store.state.profile
+    }
+  },
+  methods: {
+    showProfile() {
+      this.$router.push('/profile')
     }
   }
 }

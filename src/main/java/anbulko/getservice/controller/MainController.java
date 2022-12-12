@@ -1,5 +1,6 @@
 package anbulko.getservice.controller;
 
+import anbulko.getservice.domain.Role;
 import anbulko.getservice.repo.UserRepo;
 import anbulko.getservice.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,12 @@ public class MainController {
         HashMap<Object, Object> data = new HashMap<>();
 
         if (user != null) {
-            data.put("profile", user);
-            data.put("users", userRepo.findAll());
+            anbulko.getservice.domain.User fullUser = userRepo.findByEmail(user.getUsername()).get();
+            fullUser.setPassword(null);
+            data.put("profile", fullUser);
+            if(fullUser.getRole() == Role.ADMIN) {
+                data.put("users", userRepo.findAll());
+            }
         }
 
         model.addAttribute("frontendData", data);

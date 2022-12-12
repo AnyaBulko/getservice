@@ -27,7 +27,7 @@ public class User {
     @JsonView(Views.Normal.class)
     private String number;
     @Column(updatable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonView(Views.fullUser.class)
     private LocalDateTime registrationDate;
 
@@ -38,6 +38,16 @@ public class User {
 
     @Enumerated(value = EnumType.STRING)
     private Status status;
+
+    private String address;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public LocalDateTime getRegistrationDate() {
         return registrationDate;

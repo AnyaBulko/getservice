@@ -28,10 +28,7 @@
 <script>
 export default {
   name: "Auth",
-  data: () => ({
-    username: '',
-    password: ''
-  })
+
 }
 </script>
 
